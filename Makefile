@@ -117,6 +117,8 @@ lib/libhdf5.a:
 
 	tar -xzf hdf5-$(HDF5_VERSION).tar.gz || exit 255
 	cd hdf5-$(HDF5_VERSION) && \
+	        wget -O ./bin/config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD' \
+		wget -O ./bin/config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD' \
 		./configure --enable-threadsafe --disable-hl --libdir=`pwd`/../lib --includedir=`pwd`/../include --prefix=`pwd`/.. || exit 255
 	$(MAKE) -C hdf5-$(HDF5_VERSION) && $(MAKE) -C hdf5-$(HDF5_VERSION) install
 
