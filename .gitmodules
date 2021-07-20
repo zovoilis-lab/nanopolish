@@ -6,4 +6,4 @@
 	url = https://github.com/mateidavid/fast5
 [submodule "minimap2"]
 	path = minimap2
-	url = https://github.com/lh3/minimap2
+	url = https://github.com/zovoilis-lab/minimap2
