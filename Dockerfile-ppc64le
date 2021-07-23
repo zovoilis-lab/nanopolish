@@ -1,0 +1,30 @@
+FROM ppc64le/ubuntu:focal
+
+# Some apt packages have interative questions when installed.  This will suppress those.
+ENV DEBIAN_FRONTEND=noninteractiv
+
+#Dockerfile Mantainer
+LABEL mantainer="m.stuartedwards@uleth.ca"
+
+RUN apt update &&  apt upgrade -y
+
+# Install lots of packages
+# Nano is nice for when you run the image and want to look at files
+# build-essential is needed because we will be building from source.
+# After the python3 dependencies, there are a number of packages needed for pip to install using wheel many packages.
+
+RUN apt install -y git wget nano  build-essential zlib1g-dev libbz2-dev liblzma-dev python-dev python3-pip python3-venv libffi7 minimap2 libblas3 liblapack3 liblapack-dev libblas-dev gfortran  libatlas-base-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev libhdf5-dev
+
+# Install Nanopolish from the zovoilis-lab repository which can build on ppc64le
+RUN --mount=type=ssh git clone --recursive https://github.com/zovoilis-lab/nanopolish.git /dependencies/nanopolish
+
+WORKDIR /dependencies/nanopolish/minimap2
+
+# Execute another git pull on minimap2
+RUN git pull origin master 
+
+WORKDIR /dependencies/nanopolish/
+
+# install the nanopolish requirements using python pip and then make.
+RUN pip install -r scripts/requirements.txt \
+    && make
