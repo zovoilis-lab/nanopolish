@@ -2,9 +2,13 @@
 
 Repository to host docker build for Nanopolish on ppc64le systems.  Must be built on a ppc64le machine and the docker image will run using Ubuntu Focal (20.04).
 To build:
-   docker build -f Dockerfile-ppc64le -t nanopolish .
+```
+docker build -f Dockerfile-ppc64le -t nanopolish .
+```
 If you do not have buildkit install systemwide, then run with the following:
-   DOCKER_BUILDKIT=1 docker build -f Dockerfile-ppc64le -t nanopolish .
+```
+DOCKER_BUILDKIT=1 docker build -f Dockerfile-ppc64le -t nanopolish .
+```
 
 Nanopolish will be built and located at /dependencies/nanopolish/nanopolish in the 1st stage build, then copied into /usr/bin for a smaller second stage product.
 
